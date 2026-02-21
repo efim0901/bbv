@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ООО «БелВторПереработка» — сбор и переработка пластика, бумаги, стекла, металла в Гомеле и области.">
+    <meta name="keywords" content="Белвторпереработка, макулатура Гомель, пластик, стеклобой, вывоз вторсырья">
+    <title>ООО «БелВторПереработка» — Экология и Ресурсы</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        h1, h2, h3, h4, .font-display { font-family: 'Unbounded', sans-serif; }
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Кастомный скроллбар */
+        ::-webkit-scrollbar { width: 8px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #16a34a; border-radius: 10px; }
+        
+        [x-cloak] { display: none !important; }
+        
+        .glass { 
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(12px); 
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6); 
+        }
+        
+        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(15px); }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+
+        /* Эффект при наведении на карточки */
+        .hover-card { transition: all 0.3s ease; }
+        .hover-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 selection:bg-green-200 selection:text-green-900" x-data="{ currentTab: 'about' }">
+
+    <div class="bg-slate-900 text-white text-[10px] uppercase font-bold tracking-widest py-2.5">
+        <div class="container mx-auto px-4 flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center gap-4">
+                <span class="text-green-400 flex items-center gap-2"><i class="fas fa-recycle"></i>Гомель и область</span>
+                <span class="text-slate-600">|</span>
+                <span class="flex items-center gap-2"><i class="fas fa-clock text-slate-400"></i>Пн-Пт: 09:00 — 18:00</span>
+            </div>
+            <div class="flex gap-4">
+                <a href="#contacts" @click="currentTab = 'contacts'" class="hover:text-green-400 transition">Юридическим лицам</a>
+                <a href="#contacts" @click="currentTab = 'contacts'" class="hover:text-green-400 transition">Населению</a>
+            </div>
+        </div>
+    </div>
+
+    <header class="sticky top-0 z-50 glass shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex flex-col lg:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-3 cursor-pointer group" @click="currentTab = 'about'; window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <div class="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center text-white text-2xl shadow-lg shadow-green-200 group-hover:scale-105 transition">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-black tracking-tighter uppercase leading-none text-slate-800">БелВтор</h1>
+                        <p class="text-[9px] font-bold text-green-600 uppercase tracking-[0.2em]">Переработка</p>
+                    </div>
+                </div>
+
+                <nav class="w-full lg:w-auto overflow-x-auto pb-1 lg:pb-0 no-scrollbar">
+                    <div class="flex gap-1 bg-slate-100 p-1.5 rounded-xl min-w-max mx-auto lg:mx-0">
+                        <template x-for="tab in [
+                            {id: 'about', label: 'Главная', icon: 'fa-home'},
+                            {id: 'services', label: 'Услуги и Цены', icon: 'fa-list'},
+                            {id: 'partners', label: 'Партнеры', icon: 'fa-handshake'},
+                            {id: 'faq', label: 'Вопросы', icon: 'fa-circle-question'},
+                            {id: 'contacts', label: 'Контакты', icon: 'fa-phone'}
+                        ]" :key="tab.id">
+                            <button 
+                                @click="currentTab = tab.id; window.scrollTo({top: 0, behavior: 'smooth'})"
+                                :class="currentTab === tab.id ? 'bg-white text-green-700 shadow-sm ring-1 ring-black/5' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'"
+                                class="px-4 py-2.5 rounded-lg text-[10px] font-bold uppercase transition-all whitespace-nowrap flex items-center gap-2">
+                                <i :class="`fas ${tab.icon} text-xs`" x-show="currentTab === tab.id"></i>
+                                <span x-text="tab.label"></span>
+                            </button>
+                        </template>
+                    </div>
+                </nav>
+
+                <div class="hidden lg:flex items-center gap-4">
+                    <div class="text-right">
+                        <a href="tel:+375296989237" class="block font-black text-lg leading-none hover:text-green-600 transition">+375 (29) 698-92-37</a>
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wide">Прием заявок</span>
+                    </div>
+                    <a href="tel:+375296989237" class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center hover:bg-green-600 transition shadow-lg">
+                        <i class="fas fa-phone"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 min-h-[80vh]">
+
+        <div x-show="currentTab === 'about'" class="space-y-8 fade-in">
+            <div class="bg-slate-900 rounded-[2.5rem] p-8 lg:p-20 text-white relative overflow-hidden shadow-2xl shadow-slate-200">
+                <div class="absolute inset-0 z-0">
+                    <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=2000&auto=format&fit=crop" 
+                         alt="Background" 
+                         class="w-full h-full object-cover opacity-20 mix-blend-overlay">
+                    <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/90 to-transparent"></div>
+                </div>
+
+                <div class="relative z-10 max-w-3xl">
+                    <div class="inline-flex items-center gap-2 bg-green-500/20 border border-green-500/30 text-green-400 px-4 py-1.5 rounded-full text-[10px] font-black uppercase mb-8 tracking-wider backdrop-blur-sm">
+                        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                        Работаем с 2010 года
+                    </div>
+                    <h2 class="text-4xl lg:text-7xl font-black uppercase tracking-tighter mb-6 leading-[0.9]">
+                        Чистый город — <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">наша работа</span>
+                    </h2>
+                    <p class="text-slate-300 text-lg lg:text-xl mb-10 leading-relaxed max-w-2xl font-light">
+                        Официальный оператор по сбору и переработке вторсырья в Гомеле. Помогаем предприятиям выполнять экологические нормы, а людям — делать мир чище.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <button @click="currentTab = 'services'" class="bg-green-600 hover:bg-green-500 text-white px-8 py-4 rounded-xl font-bold uppercase text-xs tracking-widest transition shadow-lg shadow-green-900/20">
+                            Сдать сырье
+                        </button>
+                        <button @click="currentTab = 'contacts'" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-4 rounded-xl font-bold uppercase text-xs tracking-widest transition backdrop-blur-sm">
+                            Контакты
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-4">
+                <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover-card">
+                    <div class="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center text-xl mb-4"><i class="fas fa-phone-volume"></i></div>
+                    <h4 class="font-black text-sm uppercase mb-2">1. Звонок</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">Вы оставляете заявку. Менеджер уточняет объем и вид сырья.</p>
+                </div>
+                <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover-card">
+                    <div class="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center text-xl mb-4"><i class="fas fa-truck-fast"></i></div>
+                    <h4 class="font-black text-sm uppercase mb-2">2. Логистика</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">Приезжаем собственным транспортом. Взвешиваем на месте.</p>
+                </div>
+                <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover-card">
+                    <div class="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center text-xl mb-4"><i class="fas fa-file-invoice-dollar"></i></div>
+                    <h4 class="font-black text-sm uppercase mb-2">3. Расчет</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">Оплата на месте или безналичный расчет. Выдаем документы.</p>
+                </div>
+                <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover-card">
+                    <div class="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center text-xl mb-4"><i class="fas fa-leaf"></i></div>
+                    <h4 class="font-black text-sm uppercase mb-2">4. Экология</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">Сырье отправляется на переработку, а не на свалку.</p>
+                </div>
+            </div>
+        </div>
+
+        <div x-show="currentTab === 'services'" class="fade-in space-y-8" x-cloak>
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <h2 class="text-3xl lg:text-4xl font-black uppercase mb-4">Принимаем всё</h2>
+                <p class="text-slate-500">Закупаем вторичные ресурсы у населения и организаций по высоким ценам. Возможен самовывоз от 100 кг.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm hover-card relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition transform group-hover:scale-110">
+                        <i class="fas fa-box-open text-9xl text-green-800"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-green-100 text-green-700 rounded-2xl flex items-center justify-center text-2xl mb-6"><i class="fas fa-scroll"></i></div>
+                        <h3 class="text-xl font-black uppercase mb-3">Макулатура</h3>
+                        <ul class="text-sm text-slate-600 space-y-2 mb-6">
+                            <li>• Картон и гофрокартон</li>
+                            <li>• Газеты, журналы, книги</li>
+                            <li>• Архивы и офисная бумага</li>
+                        </ul>
+                        <div class="inline-block bg-slate-100 px-3 py-1 rounded-lg text-xs font-bold text-slate-600">От 0.15 BYN/кг</div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm hover-card relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition transform group-hover:scale-110">
+                        <i class="fas fa-bottle-water text-9xl text-blue-800"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-6"><i class="fas fa-wine-bottle"></i></div>
+                        <h3 class="text-xl font-black uppercase mb-3">Стеклобой</h3>
+                        <ul class="text-sm text-slate-600 space-y-2 mb-6">
+                            <li>• Стеклянные бутылки (тарные)</li>
+                            <li>• Банки любых размеров</li>
+                            <li>• Оконное стекло (чистое)</li>
+                        </ul>
+                        <div class="inline-block bg-slate-100 px-3 py-1 rounded-lg text-xs font-bold text-slate-600">Цена договорная</div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm hover-card relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition transform group-hover:scale-110">
+                        <i class="fas fa-recycle text-9xl text-orange-800"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center text-2xl mb-6"><i class="fas fa-cubes"></i></div>
+                        <h3 class="text-xl font-black uppercase mb-3">Полимеры</h3>
+                        <ul class="text-sm text-slate-600 space-y-2 mb-6">
+                            <li>• ПЭТ-бутылка (прозрачная/цветная)</li>
+                            <li>• Пленка ПВД, стрейч</li>
+                            <li>• Канистры ПНД, ящики</li>
+                        </ul>
+                        <div class="inline-block bg-slate-100 px-3 py-1 rounded-lg text-xs font-bold text-slate-600">Высокая цена</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 text-white rounded-[2.5rem] p-8 lg:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div>
+                    <h3 class="text-2xl font-black uppercase mb-2">Нужен точный прайс?</h3>
+                    <p class="text-slate-400 max-w-md">Цены могут меняться в зависимости от объема и загрязненности сырья. Позвоните нам для оценки.</p>
+                </div>
+                <div class="flex gap-4">
+                     <a href="tel:+375296989237" class="bg-green-600 hover:bg-green-500 px-6 py-4 rounded-xl font-bold uppercase text-xs tracking-widest transition">Узнать цены</a>
+                </div>
+            </div>
+        </div>
+
+        <div x-show="currentTab === 'partners'" class="fade-in space-y-12" x-cloak>
+            <div class="text-center max-w-2xl mx-auto">
+                <h2 class="text-3xl font-black uppercase mb-4">Нам доверяют</h2>
+                <p class="text-slate-500">Сотрудничаем с крупнейшими торговыми сетями, заводами и государственными учреждениями.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 h-32 flex items-center justify-center grayscale hover:grayscale-0 transition opacity-60 hover:opacity-100">
+                    <span class="font-black text-slate-300 text-xl uppercase">Евроопт</span>
+                </div>
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 h-32 flex items-center justify-center grayscale hover:grayscale-0 transition opacity-60 hover:opacity-100">
+                    <span class="font-black text-slate-300 text-xl uppercase">Соседи</span>
+                </div>
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 h-32 flex items-center justify-center grayscale hover:grayscale-0 transition opacity-60 hover:opacity-100">
+                    <span class="font-black text-slate-300 text-xl uppercase">БМЗ</span>
+                </div>
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 h-32 flex items-center justify-center grayscale hover:grayscale-0 transition opacity-60 hover:opacity-100">
+                    <span class="font-black text-slate-300 text-xl uppercase">ГомельСтекло</span>
+                </div>
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 h-32 flex items-center justify-center grayscale hover:grayscale-0 transition opacity-60 hover:opacity-100">
+                    <span class="font-black text-slate-300 text-xl uppercase">Спартак</span>
+                </div>
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 h-32 flex items-center justify-center grayscale hover:grayscale-0 transition opacity-60 hover:opacity-100">
+                    <span class="font-black text-slate-300 text-xl uppercase">Коминтерн</span>
+                </div>
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 h-32 flex items-center justify-center grayscale hover:grayscale-0 transition opacity-60 hover:opacity-100">
+                    <span class="font-black text-slate-300 text-xl uppercase">Милавица</span>
+                </div>
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 h-32 flex items-center justify-center grayscale hover:grayscale-0 transition opacity-60 hover:opacity-100">
+                    <span class="font-black text-slate-300 text-xl uppercase">Санта</span>
+                </div>
+            </div>
+        </div>
+
+        <div x-show="currentTab === 'faq'" class="fade-in max-w-3xl mx-auto" x-cloak x-data="{ active: 1 }">
+            <h2 class="text-3xl font-black uppercase mb-10 text-center">Вопросы и ответы</h2>
+            <div class="space-y-4">
+                <template x-for="(qa, index) in [
+                    {q: 'Вы сами вывозите вторсырье?', a: 'Да, у нас есть собственный автопарк. Вывоз осуществляется при наличии объема от 100 кг (в черте города) или по договоренности.'},
+                    {q: 'Как происходит оплата?', a: 'Мы работаем официально. Расчет возможен наличными на месте (с выдачей чека) или безналичным переводом на расчетный счет организации.'},
+                    {q: 'Нужно ли сортировать мусор?', a: 'Желательно. Макулатура должна быть отделена от пластика. Бумага должна быть сухой и без масляных пятен. Пластиковые бутылки желательно сжать.'},
+                    {q: 'Заключаете ли вы долгосрочные договоры?', a: 'Конечно. Мы предоставляем полный пакет документов для экологической отчетности предприятий.'}
+                ]" :key="index">
+                    <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden transition-all duration-300" :class="active === index ? 'shadow-md border-green-200' : ''">
+                        <button @click="active === index ? active = null : active = index" class="w-full flex justify-between items-center p-6 text-left hover:bg-slate-50 transition">
+                            <span class="font-black text-sm uppercase pr-4" x-text="qa.q"></span>
+                            <div class="w-8 h-8 rounded-full flex items-center justify-center transition-colors" :class="active === index ? 'bg-green-100 text-green-600' : 'bg-slate-100 text-slate-400'">
+                                <i class="fas fa-chevron-down transition-transform duration-300" :class="active === index ? 'rotate-180' : ''"></i>
+                            </div>
+                        </button>
+                        <div x-show="active === index" x-collapse class="p-6 pt-0 text-sm text-slate-600 leading-relaxed border-t border-slate-50 mt-2">
+                            <p x-text="qa.a"></p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <div x-show="currentTab === 'contacts'" class="fade-in" x-cloak>
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="space-y-8">
+                    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm">
+                        <h3 class="font-black text-xl uppercase mb-6 flex items-center gap-2">
+                            <i class="fas fa-address-card text-green-500"></i> Контакты
+                        </h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex gap-4">
+                                <div class="w-10 h-10 bg-slate-100 rounded-full flex-shrink-0 flex items-center justify-center text-slate-500"><i class="fas fa-location-dot"></i></div>
+                                <div>
+                                    <p class="font-bold text-xs text-slate-400 uppercase mb-1">Офис и склад</p>
+                                    <p class="font-medium">246042, г. Гомель, ул. 10 лет Октября, 1-2</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-4">
+                                <div class="w-10 h-10 bg-slate-100 rounded-full flex-shrink-0 flex items-center justify-center text-slate-500"><i class="fas fa-phone"></i></div>
+                                <div>
+                                    <p class="font-bold text-xs text-slate-400 uppercase mb-1">Телефоны</p>
+                                    <div class="space-y-1 font-medium">
+                                        <a href="tel:+375296989237" class="block hover:text-green-600 transition">+375 (29) 698-92-37 (A1)</a>
+                                        <a href="tel:+375291775228" class="block hover:text-green-600 transition">+375 (29) 177-52-28 (A1)</a>
+                                        <a href="tel:+375232328707" class="block hover:text-green-600 transition">8 (0232) 32-87-07 (Город)</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div class="w-10 h-10 bg-slate-100 rounded-full flex-shrink-0 flex items-center justify-center text-slate-500"><i class="fas fa-envelope"></i></div>
+                                <div>
+                                    <p class="font-bold text-xs text-slate-400 uppercase mb-1">Email</p>
+                                    <a href="mailto:belvtorpererabotka@rambler.ru" class="font-medium hover:text-green-600 transition">belvtorpererabotka@rambler.ru</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 text-white p-8 rounded-[2.5rem] shadow-lg">
+                        <h3 class="font-black text-lg uppercase mb-6 text-green-400">Реквизиты</h3>
+                        <div class="space-y-3 text-sm font-light text-slate-300">
+                            <p><span class="text-slate-500 font-bold uppercase text-[10px] block">Название</span> ООО «БелВторПереработка»</p>
+                            <p><span class="text-slate-500 font-bold uppercase text-[10px] block">УНП</span> 491333347</p>
+                            <p><span class="text-slate-500 font-bold uppercase text-[10px] block">Банк</span> ОАО «Белагропромбанк», БИК BAPBBY2X</p>
+                            <p><span class="text-slate-500 font-bold uppercase text-[10px] block">Счет (IBAN)</span> BY79BAPB30125993100100000000</p>
+                            <p><span class="text-slate-500 font-bold uppercase text-[10px] block">Адрес банка</span> пр-т Жукова, 3, г. Минск, 220036</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="h-full min-h-[400px] bg-slate-200 rounded-[2.5rem] overflow-hidden border border-slate-200 shadow-inner relative">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2432.222765873495!2d30.9844!3d52.441!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46d469a5310344b1%3A0x6a05973809054790!2z0YPQuy4gMTAg0LvQtdGCINCe0LrRgtGP0LHRgNGPLCAxLCDQk9C-0LzQtdC70Yw!5e0!3m2!1sru!2sby!4v1700000000000!5m2!1sru!2sby" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        class="absolute inset-0 grayscale hover:grayscale-0 transition duration-700">
+                    </iframe>
+                    <div class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-4 rounded-2xl border border-white shadow-lg md:w-max">
+                        <p class="font-bold text-xs uppercase text-green-600">Мы находимся здесь</p>
+                        <p class="text-sm font-bold">ул. 10 лет Октября, 1-2</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="mt-12 py-8 border-t border-slate-200 bg-white">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-center md:text-left">
+                <p class="font-black uppercase text-sm text-slate-900">ООО «БелВторПереработка»</p>
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">© 2026 Все права защищены</p>
+            </div>
+            <div class="flex gap-4">
+                <a href="#" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-green-500 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition"><i class="fab fa-viber"></i></a>
+                <a href="#" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-sky-500 hover:text-white transition"><i class="fab fa-telegram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
