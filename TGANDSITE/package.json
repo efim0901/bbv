@@ -1,0 +1,17 @@
+{
+    "name": "tg-site-marketplace",
+    "version": "2.0.0",
+    "private": true,
+    "type": "module",
+    "description": "Marketplace MVP",
+    "scripts": {
+      "start": "node src/server.js",
+      "dev": "node --watch src/server.js",
+      "bot": "node src/bot.js",
+      "webhook:set": "node src/setWebhook.js",
+      "test": "node --test tests/*.test.mjs"
+    },
+    "engines": {
+      "node": ">=24.0.0"
+    }
+  }

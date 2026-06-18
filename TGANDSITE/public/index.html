@@ -1,0 +1,161 @@
+
+  <!doctype html>
+  <html lang="ru">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Market Hub — Маркетплейс</title>
+      <link rel="stylesheet" href="/styles.css">
+    </head>
+    <body>
+      <!-- Header -->
+      <header class="topbar">
+        <a href="#/" class="brand">
+          <span class="brand-mark">MH</span>
+          <div>
+            <strong>Market Hub</strong>
+            <span>Маркетплейс · Сайт и Telegram</span>
+          </div>
+        </a>
+        <div class="topbar-actions">
+          <button class="icon-btn theme-toggle" id="themeToggle" title="Тёмная тема">🌙</button>
+          <button class="primary-button" id="openCreate">➕ Подать объявление</button>
+        </div>
+      </header>
+
+      <!-- Main -->
+      <main class="shell">
+        <!-- Filters -->
+        <section class="filters" aria-label="Фильтры каталога">
+          <button class="filters-toggle" id="filtersToggle">🔍 Фильтры</button>
+          <div class="filters-panel" id="filtersPanel">
+            <label>
+              Поиск
+              <input id="searchInput" type="search" placeholder="Телефон, запчасти, ремонт...">
+            </label>
+            <label>
+              Категория
+              <select id="categorySelect">
+                <option value="">Все категории</option>
+              </select>
+            </label>
+            <label>
+              Цена от
+              <input id="minPriceInput" type="number" min="0" inputmode="numeric" placeholder="0">
+            </label>
+            <label>
+              Цена до
+              <input id="maxPriceInput" type="number" min="0" inputmode="numeric" placeholder="∞">
+            </label>
+            <label>
+              Сортировка
+              <select id="sortSelect">
+                <option value="newest">Сначала новые</option>
+                <option value="price_asc">Сначала дешевле</option>
+                <option value="price_desc">Сначала дороже</option>
+                <option value="popular">По популярности</option>
+              </select>
+            </label>
+          </div>
+        </section>
+
+        <!-- Content -->
+        <section class="content-grid">
+          <section>
+            <div class="section-heading">
+              <div>
+                <h1>Каталог объявлений</h1>
+                <p id="resultCount">Загрузка...</p>
+              </div>
+              <button class="secondary-button" id="refreshButton">🔄 Обновить</button>
+            </div>
+            <div class="listing-grid" id="listingGrid">
+              <!-- Skeleton loading -->
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+            </div>
+            <div class="pagination" id="pagination"></div>
+          </section>
+
+          <!-- Detail panel (desktop) -->
+          <aside class="detail-panel" id="detailPanel">
+            <div class="detail-placeholder">
+              <span class="muted">Выберите объявление</span>
+              <h2>Детали появятся здесь</h2>
+              <p>В каталоге можно быстро открыть карточку, посмотреть продавца и контакты.</p>
+            </div>
+          </aside>
+        </section>
+      </main>
+
+      <!-- Detail modal (mobile) -->
+      <dialog id="detailDialog">
+        <div class="dialog-content">
+          <button class="icon-btn close-dialog" id="closeDetail">✕</button>
+          <div id="detailContent"></div>
+        </div>
+      </dialog>
+
+      <!-- Create listing dialog -->
+      <dialog id="createDialog">
+        <form method="dialog" class="listing-form" id="listingForm">
+          <div class="dialog-heading">
+            <div>
+              <h2>Новое объявление</h2>
+              <p>После публикации оно сразу появится в общем API.</p>
+            </div>
+            <button class="icon-btn" value="cancel" aria-label="Закрыть">✕</button>
+          </div>
+
+          <div class="form-grid">
+            <label>
+              Имя продавца
+              <input name="sellerName" required maxlength="120" autocomplete="name" placeholder="Иван Иванов">
+            </label>
+            <label>
+              Телефон
+              <input name="sellerPhone" maxlength="40" autocomplete="tel" placeholder="+375 29 123-45-67">
+            </label>
+            <label>
+              Заголовок
+              <input name="title" required maxlength="140" placeholder="iPhone 13 128 GB">
+            </label>
+            <label>
+              Цена, BYN
+              <input name="price" type="number" min="0" required inputmode="numeric" placeholder="1450">
+            </label>
+            <label>
+              Категория
+              <select name="categoryId" id="formCategorySelect" required></select>
+            </label>
+            <label>
+              Город
+              <input name="city" maxlength="120" placeholder="Минск">
+            </label>
+            <label class="wide">
+              Фото (до 10 шт.)
+              <input name="imageFiles" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple>
+              <div class="image-preview" id="imagePreview"></div>
+            </label>
+            <label class="wide">
+              Описание
+              <textarea name="description" rows="5" required maxlength="4000" placeholder="Состояние, комплект, важные
+  детали..."></textarea>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button class="secondary-btn" value="cancel">Отмена</button>
+            <button class="primary-button" value="default">📤 Опубликовать</button>
+          </div>
+        </form>
+      </dialog>
+
+      <!-- Toast container -->
+      <div class="toast-container" id="toastContainer"></div>
+
+      <script src="/app.js" type="module"></script>
+    </body>
+  </html>

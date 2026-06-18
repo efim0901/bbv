@@ -1,0 +1,14 @@
+[Unit]
+Description=Market Hub API and website
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/tg-site-marketplace
+EnvironmentFile=/opt/tg-site-marketplace/.env
+ExecStart=/usr/bin/node src/server.js
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-label="Нет фото">
+  <rect width="640" height="480" fill="#eef2f4"/>
+  <rect x="118" y="92" width="404" height="296" rx="18" fill="#ffffff" stroke="#d8dee4" stroke-width="8"/>
+  <circle cx="238" cy="196" r="44" fill="#b8c2cc"/>
+  <path d="M152 346l116-112 82 78 54-52 84 86H152z" fill="#74808c"/>
+  <text x="320" y="426" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" font-weight="700" fill="#697386">Фото</text>
+</svg>

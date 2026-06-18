@@ -1,0 +1,56 @@
+version: '3.9'
+
+  services:
+    app:
+      build: .
+      container_name: marketplace-api
+      restart: unless-stopped
+      ports:
+        - "3000:3000"
+      env_file:
+        - .env
+      environment:
+        - NODE_ENV=production
+        - PORT=3000
+      volumes:
+        - app-data:/app/data
+        - app-uploads:/app/public/uploads
+      networks:
+        - marketplace
+
+    bot:
+      build: .
+      container_name: marketplace-bot
+      restart: unless-stopped
+      command: node src/bot.js
+      env_file:
+        - .env
+      environment:
+        - NODE_ENV=production
+        - API_BASE_URL=http://app:3000
+      depends_on:
+        - app
+      networks:
+        - marketplace
+
+    nginx:
+      image: nginx:alpine
+      container_name: marketplace-nginx
+      restart: unless-stopped
+      ports:
+        - "80:80"
+        - "443:443"
+      volumes:
+        - ./infra/nginx/marketplace.conf:/etc/nginx/conf.d/default.conf:ro
+      depends_on:
+        - app
+      networks:
+        - marketplace
+
+  volumes:
+    app-data:
+    app-uploads:
+
+  networks:
+    marketplace:
+      driver: bridge
